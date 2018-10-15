@@ -1,6 +1,6 @@
 {
-    "name": "bybrand/oauth2-zoho",
-    "description": "Zoho Provider for PHP League's OAuth 2.0 Client",
+    "name": "bybrand/oauth2-zohodesk",
+    "description": "Zoho Desk Provider for PHP League's OAuth 2.0 Client",
     "license": "MIT",
     "authors": [
         {
@@ -14,6 +14,7 @@
     "keywords": [
         "php",
         "zoho",
+        "zoho desk",
         "api",
         "oauth2",
         "authorization",
