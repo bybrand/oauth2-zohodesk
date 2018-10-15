@@ -13,11 +13,6 @@ class ZohoDesk extends AbstractProvider
     use BearerAuthorizationTrait;
 
     /**
-     * @var string Key used in a token response to identify the resource owner.
-     */
-    const ACCESS_TOKEN_RESOURCE_OWNER_ID = 'id';
-
-    /**
      * Get authorization url to begin OAuth flow
      *
      * @return string
@@ -48,8 +43,7 @@ class ZohoDesk extends AbstractProvider
      */
     public function getResourceOwnerDetailsUrl(AccessToken $token)
     {
-        // return 'https://desk.zoho.com/api/v1/organizations';
-        return false;
+        return 'https://desk.zoho.com/api/v1/organizations';
     }
 
     /**
@@ -91,6 +85,6 @@ class ZohoDesk extends AbstractProvider
      */
     protected function createResourceOwner(array $response, AccessToken $token)
     {
-        return new ZohoResourceOwner($response);
+        return new ZohoDeskResourceOwner($response);
     }
 }

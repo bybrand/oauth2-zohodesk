@@ -33,20 +33,18 @@ class ZohoDeskResourceOwner implements ResourceOwnerInterface
      */
     public function getId()
     {
-        return null;
-        // return $this->getValueByKey($this->response, 'data.0.id');
+        return $this->getValueByKey($this->response, 'data.0.id');
     }
 
-    // /**
-    //  * Get resource owner name
-    //  *
-    //  * @return string|null
-    //  */
-    // public function getName()
-    // {
-    //     $name = $this->getValueByKey($this->response, 'data.0.organizationName') ?: '';
-    //     return $name;
-    // }
+    /**
+     * Get resource owner organization Name
+     *
+     * @return string|null
+     */
+    public function getOrganizationName()
+    {
+        return $this->getValueByKey($this->response, 'data.0.organizationName');
+    }
 
     /**
      * Return all of the owner details available as an array.
