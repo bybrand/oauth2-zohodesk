@@ -5,7 +5,7 @@ namespace Bybrand\OAuth2\Client\Provider;
 use League\OAuth2\Client\Provider\ResourceOwnerInterface;
 use League\OAuth2\Client\Tool\ArrayAccessorTrait;
 
-class ZohoResourceOwner implements ResourceOwnerInterface
+class ZohoDeskResourceOwner implements ResourceOwnerInterface
 {
     use ArrayAccessorTrait;
 
@@ -34,7 +34,19 @@ class ZohoResourceOwner implements ResourceOwnerInterface
     public function getId()
     {
         return null;
+        // return $this->getValueByKey($this->response, 'data.0.id');
     }
+
+    // /**
+    //  * Get resource owner name
+    //  *
+    //  * @return string|null
+    //  */
+    // public function getName()
+    // {
+    //     $name = $this->getValueByKey($this->response, 'data.0.organizationName') ?: '';
+    //     return $name;
+    // }
 
     /**
      * Return all of the owner details available as an array.

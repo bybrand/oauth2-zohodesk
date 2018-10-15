@@ -8,14 +8,14 @@ use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use League\OAuth2\Client\Token\AccessToken;
 use League\OAuth2\Client\Tool\BearerAuthorizationTrait;
 
-class Zoho extends AbstractProvider
+class ZohoDesk extends AbstractProvider
 {
     use BearerAuthorizationTrait;
 
     /**
      * @var string Key used in a token response to identify the resource owner.
      */
-    const ACCESS_TOKEN_RESOURCE_OWNER_ID = 'login';
+    const ACCESS_TOKEN_RESOURCE_OWNER_ID = 'id';
 
     /**
      * Get authorization url to begin OAuth flow
@@ -48,8 +48,8 @@ class Zoho extends AbstractProvider
      */
     public function getResourceOwnerDetailsUrl(AccessToken $token)
     {
-        // return 'https://api-ssl.bitly.com/v4/groups';
-        return '';
+        // return 'https://desk.zoho.com/api/v1/organizations';
+        return false;
     }
 
     /**

@@ -3,16 +3,16 @@
 namespace Bybrand\OAuth2\Client\Test\Provider;
 
 use PHPUnit\Framework\TestCase;
-use Bybrand\OAuth2\Client\Provider\Zoho;
+use Bybrand\OAuth2\Client\Provider\ZohoDesk;
 use Mockery as m;
 
-class ZohoTest extends TestCase
+class ZohoDeskTest extends TestCase
 {
     protected $provider;
 
     protected function setUp()
     {
-        $this->provider = new Zoho([
+        $this->provider = new ZohoDesk([
             'clientId'     => 'mock_client_id',
             'clientSecret' => 'mock_secret',
             'redirectUri'  => 'none',
@@ -34,8 +34,6 @@ class ZohoTest extends TestCase
         $url = $this->provider->getAuthorizationUrl();
         $uri = parse_url($url);
         parse_str($uri['query'], $query);
-
-        var_dump($query);
 
         $this->assertArrayHasKey('client_id', $query);
         $this->assertArrayHasKey('response_type', $query);
@@ -79,9 +77,15 @@ class ZohoTest extends TestCase
      */
     public function testGetAccessToken()
     {
+        $json = [
+            'access_token'   => 'mock_access_token',
+            'expires_in_sec' => 3600,
+            'token_type'     => 'Bearer',
+            'expires_in'     => 3600000,
+        ];
+
         $response = m::mock('Psr\Http\Message\ResponseInterface');
-        $response->shouldReceive('getBody')
-            ->andReturn('{"access_token": "mock_access_token", "token_type": "bearer", "login": "mock_login", "apiKey": "api_key_id"}');
+        $response->shouldReceive('getBody')->andReturn(json_encode($json));
         $response->shouldReceive('getHeader')->andReturn(['content-type' => 'json']);
         $response->shouldReceive('getStatusCode')->andReturn(200);
 
@@ -94,9 +98,47 @@ class ZohoTest extends TestCase
             ->getAccessToken('authorization_code', ['code' => 'mock_authorization_code']);
 
         $this->assertEquals('mock_access_token', $token->getToken());
-        $this->assertNull($token->getExpires());
+        $this->assertInternalType('int', $token->getExpires());
         $this->assertNull($token->getRefreshToken());
+    }
 
-        $this->assertEquals('mock_login', $token->getResourceOwnerId());
+    /**
+     * @group Zoho
+     * @group Zoho.GetRefreshToken
+     */
+    public function testGetRefreshToken()
+    {
+        $json = [
+            'access_token'   => 'mock_access_token',
+            'refresh_token'  => 'mock_refresh_token',
+            'expires_in_sec' => 3600,
+            'token_type'     => 'Bearer',
+            'expires_in'     => 3600000,
+        ];
+
+        $response = m::mock('Psr\Http\Message\ResponseInterface');
+        $response->shouldReceive('getBody')->andReturn(json_encode($json));
+        $response->shouldReceive('getHeader')->andReturn(['content-type' => 'json']);
+        $response->shouldReceive('getStatusCode')->andReturn(200);
+
+        $client = m::mock('GuzzleHttp\ClientInterface');
+        $client->shouldReceive('send')->times(1)->andReturn($response);
+
+        // Set offline provider for get refresh token.
+        $provider = new ZohoDesk([
+            'clientId'     => 'mock_client_id',
+            'clientSecret' => 'mock_secret',
+            'redirectUri'  => 'none',
+            'access_type'  => 'offline', // To refresh token
+        ]);
+
+        $provider->setHttpClient($client);
+
+        $token =$provider
+            ->getAccessToken('authorization_code', ['code' => 'mock_authorization_code']);
+
+        $this->assertEquals('mock_access_token', $token->getToken());
+        $this->assertEquals('mock_refresh_token', $token->getRefreshToken());
+        $this->assertInternalType('int', $token->getExpires());
     }
 }
