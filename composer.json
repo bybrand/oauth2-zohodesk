@@ -1,0 +1,39 @@
+{
+    "name": "bybrand/oauth2-zoho",
+    "description": "Zoho Provider for PHP League's OAuth 2.0 Client",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Bernardo Castro",
+            "email": "bs.castro@gmail.com"
+        }
+    ],
+    "config": {
+		"vendor-dir": "./vendor"
+	},
+    "keywords": [
+        "php",
+        "zoho",
+        "api",
+        "oauth2",
+        "authorization",
+        "authentication"
+    ],
+    "require": {
+        "league/oauth2-client": "^2.3"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.5",
+        "mockery/mockery": "^1.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Bybrand\\OAuth2\\Client\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Bybrand\\OAuth2\\Client\\Test\\": "tests/src/"
+        }
+    }
+}
