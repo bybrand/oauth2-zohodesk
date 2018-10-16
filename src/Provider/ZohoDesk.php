@@ -13,6 +13,12 @@ class ZohoDesk extends AbstractProvider
     use BearerAuthorizationTrait;
 
     /**
+     * @var string If set, this will be sent to zoho as the "access_type" parameter.
+     * @link https://desk.zoho.com/support/APIDocument.do#Authentication#OauthTokens
+     */
+    protected $accessType;
+
+    /**
      * Get authorization url to begin OAuth flow
      *
      * @return string
@@ -44,6 +50,17 @@ class ZohoDesk extends AbstractProvider
     public function getResourceOwnerDetailsUrl(AccessToken $token)
     {
         return 'https://desk.zoho.com/api/v1/organizations';
+    }
+
+    protected function getAuthorizationParameters(array $options)
+    {
+        $params = array_merge(
+            parent::getAuthorizationParameters($options),
+            array_filter([
+                'access_type' => $this->accessType,
+            ])
+        );
+        return $params;
     }
 
     /**
