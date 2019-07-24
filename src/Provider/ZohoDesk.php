@@ -18,6 +18,8 @@ class ZohoDesk extends AbstractProvider
      */
     protected $accessType;
 
+    protected $accountsServer;
+
     /**
      * Get authorization url to begin OAuth flow
      *
@@ -25,7 +27,7 @@ class ZohoDesk extends AbstractProvider
      */
     public function getBaseAuthorizationUrl()
     {
-        return 'https://accounts.zoho.com/oauth/v2/auth';
+        return $this->accountsServer . '/oauth/v2/auth';
     }
 
     /**
@@ -37,7 +39,7 @@ class ZohoDesk extends AbstractProvider
      */
     public function getBaseAccessTokenUrl(array $params)
     {
-        return 'https://accounts.zoho.com/oauth/v2/token';
+        return $this->accountsServer . '/oauth/v2/token';
     }
 
     /**
