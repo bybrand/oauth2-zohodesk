@@ -18,7 +18,17 @@ class ZohoDesk extends AbstractProvider
      */
     protected $accessType;
 
-    protected $accountsServer;
+    /**
+     * The accounts server host for multi-DC support.
+     * @var string
+     */
+    protected $accountsServer = 'https://accounts.zoho.com';
+
+    /**
+     * The host server location for multi-DC support.
+     * @var string
+     */
+    protected $hostResourceLocation = 'https://desk.zoho.com';
 
     /**
      * Get authorization url to begin OAuth flow
@@ -43,7 +53,7 @@ class ZohoDesk extends AbstractProvider
     }
 
     /**
-     * Get provider url to fetch user details
+     * Get provider url to fetch organization details
      *
      * @param AccessToken $token
      *
@@ -51,7 +61,7 @@ class ZohoDesk extends AbstractProvider
      */
     public function getResourceOwnerDetailsUrl(AccessToken $token)
     {
-        return 'https://desk.zoho.com/api/v1/organizations';
+        return $this->hostResourceLocation . '/api/v1/organizations';
     }
 
     protected function getAuthorizationParameters(array $options)
@@ -100,7 +110,7 @@ class ZohoDesk extends AbstractProvider
      * @param array $response
      * @param AccessToken $token
      *
-     * @return BitlyResourceOwner
+     * @return ZohoDeskResourceOwner
      */
     protected function createResourceOwner(array $response, AccessToken $token)
     {

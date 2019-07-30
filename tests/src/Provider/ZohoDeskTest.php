@@ -16,6 +16,9 @@ class ZohoDeskTest extends TestCase
             'clientId'     => 'mock_client_id',
             'clientSecret' => 'mock_secret',
             'redirectUri'  => 'none',
+            // 'accessType'     => 'offline',
+            'accountsServer'       => 'https://accounts.zoho.com',
+            'hostResourceLocation' => 'https://desk.zoho.com'
         ]);
     }
 

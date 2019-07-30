@@ -24,7 +24,7 @@ $params = $_GET;
 $provider = new ProviderZohoDesk([
     'clientId'     => 'key-id',
     'clientSecret' => 'secret-key',
-    'redirectUri'  => 'your-url-redirect'    
+    'redirectUri'  => 'your-url-redirect',
 ]);
 
 if (!empty($params['error'])) {
