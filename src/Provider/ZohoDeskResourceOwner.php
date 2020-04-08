@@ -43,7 +43,7 @@ class ZohoDeskResourceOwner implements ResourceOwnerInterface
      */
     public function getOrganizationName()
     {
-        return $this->getValueByKey($this->response, 'data.0.organizationName');
+        return $this->getValueByKey($this->response, 'data.0.companyName');
     }
 
     /**
