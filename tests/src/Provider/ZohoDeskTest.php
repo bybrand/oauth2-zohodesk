@@ -126,7 +126,7 @@ class ZohoDeskTest extends TestCase
 
         $userJson['data'][] = [
             'id'               => $organizationId,
-            'organizationName' => 'zylker'
+            'companyName' => 'zylker'
         ];
 
         $response = m::mock('Psr\Http\Message\ResponseInterface');
